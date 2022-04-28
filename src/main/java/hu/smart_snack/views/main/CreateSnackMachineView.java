@@ -10,7 +10,7 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import hu.smart_snack.Controller.SnackMachineController;
+import hu.smart_snack.controller.SnackMachineController;
 import hu.smart_snack.model.CountiesAndCities;
 import hu.smart_snack.model.SnackMachine;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
-package hu.smart_snack.Services.Impl;
+package hu.smart_snack.services.Impl;
 
-import hu.smart_snack.Services.SnackMachineService;
+import hu.smart_snack.services.SnackMachineService;
 import hu.smart_snack.model.SnackMachine;
 import hu.smart_snack.repo.SmartSnackRepository;
 import lombok.RequiredArgsConstructor;

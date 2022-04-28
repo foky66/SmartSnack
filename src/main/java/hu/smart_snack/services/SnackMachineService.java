@@ -1,4 +1,4 @@
-package hu.smart_snack.Services;
+package hu.smart_snack.services;
 
 import hu.smart_snack.model.SnackMachine;
 

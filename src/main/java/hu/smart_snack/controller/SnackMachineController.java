@@ -1,7 +1,7 @@
-package hu.smart_snack.Controller;
+package hu.smart_snack.controller;
 
 
-import hu.smart_snack.Services.Impl.SnackMachineServiceImpl;
+import hu.smart_snack.services.Impl.SnackMachineServiceImpl;
 import hu.smart_snack.model.SnackMachine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
