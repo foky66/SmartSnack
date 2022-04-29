@@ -16,8 +16,9 @@ import hu.smart_snack.model.SnackMachine;
 import java.util.HashMap;
 import java.util.List;
 
+
 @PageTitle("Create SnackMachine")
-@Route(value ="")
+@Route(value ="create", layout = MainView.class)
 public class CreateSnackMachineView extends VerticalLayout {
 
     private ComboBox<String> county;
@@ -28,19 +29,24 @@ public class CreateSnackMachineView extends VerticalLayout {
     private Button addFields;
     private TextArea showProducts;
 
-    private final HashMap<String, Integer> products = new HashMap();
+    private final HashMap<String, Integer> products = new HashMap<>();
     private  final CountiesAndCities countiesAndCities = new CountiesAndCities();
-    private final List<String> optionalProducts = List.of("CocaCola","Szentkirályi ásv.","Fanta","ChioChips","Snickers","Bounty","Mentos","Croissant");
+    private final List<String> optionalProducts =
+            List.of("CocaCola","Szentkirályi ásv.","Fanta","ChioChips","Snickers","Bounty","Mentos","Croissant");
+    private final SnackMachineController controller;
 
 
     public CreateSnackMachineView(SnackMachineController controller){
+        this.controller = controller;
         configureLayouts();
         setCountyAndCityComboBox();
         setProductAndAmount();
 
+        configureListeners();
+    }
 
-        createSnackMachine.addClickListener(e -> saveMachine(controller));
-
+    private void configureListeners() {
+        createSnackMachine.addClickListener(e -> saveMachine());
         addFields.addClickListener(event->{
             addProductsToMachine();
             showProducts.setValue(printProducts());
@@ -49,21 +55,21 @@ public class CreateSnackMachineView extends VerticalLayout {
     }
 
     private void configureLayouts(){
-        county = new ComboBox<>("Machine County");
-        city = new ComboBox<>("Machine City");
-        product = new ComboBox<>("Prodoct");
+        county = new ComboBox<>("County");
+        city = new ComboBox<>("City");
+        product = new ComboBox<>("Product");
         amount = new NumberField("Amount");
         createSnackMachine = new Button("Create SnackMachine");
         addFields= new Button("+");
         showProducts = new TextArea();
-
+        county.setWidth("300px");
         HorizontalLayout horizontalLayout = new HorizontalLayout();
         horizontalLayout.setAlignItems(Alignment.END);
         horizontalLayout.add(product, amount, addFields);
 
         showProducts.setReadOnly(true);
         showProducts.setWidth("300px");
-
+        setAlignItems(Alignment.BASELINE);
         add(county, city, horizontalLayout, showProducts, createSnackMachine);
         setMargin(true);
     }
@@ -74,14 +80,14 @@ public class CreateSnackMachineView extends VerticalLayout {
         resetProductAndAmount();
     }
 
-    private void saveMachine(SnackMachineController controller) {
+    private void saveMachine() {
         Notification.show("SnackMachine added to database");
         controller.saveMachine(SnackMachine.builder()
                 .county(county.getValue())
                 .city(city.getValue())
                 .products(products)
-                .isAnyProductEmpty(false)
-                .isWorking(true)
+                .isAnyProductEmpty(false)    //default : false
+                .isWorking(true)            //default : true
                 .build());
     }
 
@@ -115,7 +121,7 @@ public class CreateSnackMachineView extends VerticalLayout {
     private String printProducts(){
         StringBuilder out = new StringBuilder();
          products.forEach((key,value) ->{
-            out.append(key + ":" + value.toString() + " db");
+            out.append(key).append(":").append(value.toString()).append(" db");
             out.append("\n");
         });
          return out.toString();

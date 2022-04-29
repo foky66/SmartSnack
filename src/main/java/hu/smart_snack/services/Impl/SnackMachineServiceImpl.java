@@ -16,9 +16,9 @@ public class SnackMachineServiceImpl implements SnackMachineService {
     private final SmartSnackRepository repository;
 
     @Override
-    public SnackMachine create(SnackMachine snackAutomat) {
-        log.info("Saving new SnackMachine: {}", snackAutomat);
-        return repository.save(snackAutomat);
+    public SnackMachine create(SnackMachine snackMachine) {
+        log.info("Saving new SnackMachine: {}", snackMachine);
+        return repository.save(snackMachine);
     }
 
     @Override

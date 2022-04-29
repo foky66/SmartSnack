@@ -1,30 +1,45 @@
 package hu.smart_snack.views.main;
 
-import com.vaadin.flow.component.button.Button;
+
+import com.vaadin.flow.component.applayout.AppLayout;
+import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.*;
 import lombok.extern.slf4j.Slf4j;
 
+
 @PageTitle("Main")
-@Route(value = "gfh")
+@Route(value = "main")
 @Slf4j
-public class MainView extends HorizontalLayout {
+public class MainView extends AppLayout {
 
-
-    public MainView() throws InterruptedException {
-        H1 h1 = new H1("Welcome to my SnackMachine management services");
-        H2 h2 = new H2("test33");
-        Button btn = new Button("create SnackMachine");
-
-        add(h1 ,h2, btn);
-
-
-
+    public MainView() {
+        createHeader();
+        createDrawers();
 
     }
 
+    private void createDrawers() {
+        RouterLink main = new RouterLink("Home", HomeView.class);
+        RouterLink create = new RouterLink("Create Machine", CreateSnackMachineView.class);
+        RouterLink listAll = new RouterLink("All Machines", AvailableMachinesView.class);
+        create.setHighlightCondition(HighlightConditions.sameLocation());
+        addToDrawer(new VerticalLayout(
+                main,
+                listAll,
+                create
+        ));
+    }
+
+    private void createHeader() {
+        H1 title = new H1("SnackMachine");
+        title.addClassNames("text-l", "m-m");
+        HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), title);
+        header.setAlignItems(FlexComponent.Alignment.AUTO);
+        addToNavbar(header);
+    }
 
 }

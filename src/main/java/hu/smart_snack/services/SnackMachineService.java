@@ -9,6 +9,6 @@ public interface SnackMachineService {
     SnackMachine create(SnackMachine snackMachine);
     List<SnackMachine> getAllSnackMachine();
     SnackMachine get(Integer iD);
-    SnackMachine update(SnackMachine snackAutomat);
+    SnackMachine update(SnackMachine snackMachine);
     
 }

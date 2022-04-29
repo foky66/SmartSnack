@@ -32,4 +32,11 @@ public class SnackMachine {
     boolean isWorking;
     boolean isAnyProductEmpty;
 
+    //This method needed to MachinesView grid layout because the original @products is Map
+    public String getProduct(){
+        StringBuilder sb = new StringBuilder();
+         products.keySet().forEach(key-> sb.append(key).append(", "));
+         return sb.substring(0,sb.length()-2);
+    }
+
 }
