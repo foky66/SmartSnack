@@ -10,9 +10,10 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import hu.smart_snack.controller.SnackMachineController;
 import hu.smart_snack.model.CountiesAndCities;
 import hu.smart_snack.model.SnackMachine;
+import hu.smart_snack.services.Impl.SnackMachineServiceImpl;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,11 +34,11 @@ public class CreateSnackMachineView extends VerticalLayout {
     private  final CountiesAndCities countiesAndCities = new CountiesAndCities();
     private final List<String> optionalProducts =
             List.of("CocaCola","Szentkirályi ásv.","Fanta","ChioChips","Snickers","Bounty","Mentos","Croissant");
-    private final SnackMachineController controller;
+    private final SnackMachineServiceImpl service;
 
 
-    public CreateSnackMachineView(SnackMachineController controller){
-        this.controller = controller;
+    public CreateSnackMachineView(SnackMachineServiceImpl service){
+        this.service = service;
         configureLayouts();
         setCountyAndCityComboBox();
         setProductAndAmount();
@@ -82,13 +83,15 @@ public class CreateSnackMachineView extends VerticalLayout {
 
     private void saveMachine() {
         Notification.show("SnackMachine added to database");
-        controller.saveMachine(SnackMachine.builder()
+        service.create(SnackMachine.builder()
                 .county(county.getValue())
                 .city(city.getValue())
                 .products(products)
                 .isAnyProductEmpty(false)    //default : false
                 .isWorking(true)            //default : true
                 .build());
+        resetProductAndAmount();
+        showProducts.clear();
     }
 
     private void setCountyAndCityComboBox(){
@@ -117,6 +120,7 @@ public class CreateSnackMachineView extends VerticalLayout {
         product.clear();
         amount.clear();
     }
+
 
     private String printProducts(){
         StringBuilder out = new StringBuilder();
