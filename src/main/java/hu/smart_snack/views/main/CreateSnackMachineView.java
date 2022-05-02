@@ -13,6 +13,7 @@ import com.vaadin.flow.router.Route;
 import hu.smart_snack.model.CountiesAndCities;
 import hu.smart_snack.model.SnackMachine;
 import hu.smart_snack.services.Impl.SnackMachineServiceImpl;
+import hu.smart_snack.validation.AmountValidation;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +36,7 @@ public class CreateSnackMachineView extends VerticalLayout {
     private final List<String> optionalProducts =
             List.of("CocaCola","Szentkirályi ásv.","Fanta","ChioChips","Snickers","Bounty","Mentos","Croissant");
     private final SnackMachineServiceImpl service;
+    private final AmountValidation validation = new AmountValidation();
 
 
     public CreateSnackMachineView(SnackMachineServiceImpl service){
@@ -76,6 +78,13 @@ public class CreateSnackMachineView extends VerticalLayout {
     }
 
     private void addProductsToMachine() {
+        try{
+            validation.validate(amount.getValue().intValue());
+        }catch (IllegalArgumentException e){
+            Notification.show(e.getMessage());
+            resetProductAndAmount();
+            return;
+        }
         products.put(product.getValue(),amount.getValue().intValue());
         Notification.show("Product and amount added to Machine");
         resetProductAndAmount();

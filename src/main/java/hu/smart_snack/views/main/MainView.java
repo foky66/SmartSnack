@@ -25,7 +25,7 @@ public class MainView extends AppLayout {
     private void createDrawers() {
         RouterLink main = new RouterLink("Home", HomeView.class);
         RouterLink create = new RouterLink("Create Machine", CreateSnackMachineView.class);
-        RouterLink listAll = new RouterLink("All Machines", AvailableMachinesView.class);
+        RouterLink listAll = new RouterLink("All Machines", MachineManagerView.class);
         create.setHighlightCondition(HighlightConditions.sameLocation());
         addToDrawer(new VerticalLayout(
                 main,

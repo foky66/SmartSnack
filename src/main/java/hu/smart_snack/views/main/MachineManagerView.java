@@ -9,18 +9,17 @@ import com.vaadin.flow.router.Route;
 import hu.smart_snack.model.SnackMachine;
 import hu.smart_snack.services.Impl.SnackMachineServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.w3c.dom.events.UIEvent;
 
 import java.util.List;
 
 
 @Route(value = "allMachines", layout = MainView.class)
 @Slf4j
-public class AvailableMachinesView extends HorizontalLayout {
+public class MachineManagerView extends HorizontalLayout {
 
     private final SnackMachineServiceImpl service;
 
-    public AvailableMachinesView(SnackMachineServiceImpl service) {
+    public MachineManagerView(SnackMachineServiceImpl service) {
         this.service = service;
         createGrid();
     }
@@ -45,7 +44,7 @@ public class AvailableMachinesView extends HorizontalLayout {
         String theme = String
                 .format("badge %s", isAvailable ? "success" : "error");
         span.getElement().setAttribute("theme", theme);
-        span.setText(isAvailable ? "not empty" : "empty");
+        span.setText(isAvailable ? "filled" : "empty");
     };
 
     private static ComponentRenderer<Span, SnackMachine> createStatusComponentRenderer() {
